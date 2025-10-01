@@ -66,6 +66,7 @@
     void onEvent (ev_t ev) {
     }
     
+    osjob_t tempCheckJob;
     osjob_t txjob;
     osjob_t timeoutjob;
     static void tx_func (osjob_t* job);
@@ -132,6 +133,19 @@
       // will reschedule at half this time.
       os_setTimedCallback(job, os_getTime() + ms2osticks(TX_INTERVAL + random(500)), tx_func);
     }
+
+    void update_temps() {
+      averageTemp = tempSensor.calculateAverage();
+      //Serial.println("Updating temps...");
+    }
+
+    static void tempSecondCallback(osjob_t* job) {
+      update_temps();
+
+      // Reschedule the job in 1 second (1 second = 1 * os_getTime_ticsPerSec())
+      os_setTimedCallback(&tempCheckJob, os_getTime() + sec2osticks(1), tempSecondCallback);
+    }
+
     
     // application entry point
     void setup() {
@@ -188,6 +202,8 @@
     
       // setup initial job
       os_setCallback(&txjob, tx_func);
+      os_setTimedCallback(&tempCheckJob, os_getTime() + sec2osticks(1), tempSecondCallback);
+
     }
     
     void loop() {
