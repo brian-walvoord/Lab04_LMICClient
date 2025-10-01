@@ -43,7 +43,7 @@
     // this interval should not also be increased.
     // See this spreadsheet for an easy airtime and duty cycle calculator:
     // https://docs.google.com/spreadsheets/d/1voGAtQAjC1qBmaVuP1ApNKs1ekgUjavHuVQIXyYSvNc
-    #define TX_INTERVAL 60000  //Delay between each message in millidecond.
+    #define TX_INTERVAL 15000  //Delay between each message in milliseconds.
     
       // Pin mapping for SAMD21
       const lmic_pinmap lmic_pins = {
@@ -127,7 +127,10 @@
     // log text to USART and toggle LED
     static void tx_func (osjob_t* job) {
       // say hello
-      tx("Hello from Brian", txdone_func);
+      char buffer[16];
+      snprintf(buffer, sizeof(buffer), "%.2f", averageTemp);
+      tx(buffer, txdone_func);
+      tx("buffer", txdone_func);
       // reschedule job every TX_INTERVAL (plus a bit of random to prevent
       // systematic collisions), unless packets are received, then rx_func
       // will reschedule at half this time.
@@ -136,7 +139,7 @@
 
     void update_temps() {
       averageTemp = tempSensor.calculateAverage();
-      //Serial.println("Updating temps...");
+      SerialUSB.println("Updating temps...");
     }
 
     static void tempSecondCallback(osjob_t* job) {
