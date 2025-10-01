@@ -121,7 +121,7 @@
     // log text to USART and toggle LED
     static void tx_func (osjob_t* job) {
       // say hello
-      tx("Hello there!", txdone_func);
+      tx("Hello from Brian", txdone_func);
       // reschedule job every TX_INTERVAL (plus a bit of random to prevent
       // systematic collisions), unless packets are received, then rx_func
       // will reschedule at half this time.
