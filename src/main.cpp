@@ -130,14 +130,9 @@
       snprintf(buffer, sizeof(buffer), "%d", (int)averageTemp);
       tx(buffer, txdone_func);
       os_setTimedCallback(job, os_getTime() + ms2osticks(TX_INTERVAL + random(500)), tx_func);
-      // say hello
-      // char buffer[16];
-      // snprintf(buffer, sizeof(buffer), "%.2f", averageTemp);
-      // tx("buffer", txdone_func);
       // reschedule job every TX_INTERVAL (plus a bit of random to prevent
       // systematic collisions), unless packets are received, then rx_func
       // will reschedule at half this time.
-      os_setTimedCallback(job, os_getTime() + ms2osticks(TX_INTERVAL + random(500)), tx_func);
     }
 
     void update_temps() {
