@@ -17,6 +17,12 @@ namespace RealTimeCounterLibrary {
              */
             void generateTimeStampString(char* timeStamp, size_t size);
 
+            uint8_t getHours();
+
+            uint8_t getMinutes();
+
+            uint8_t getSeconds();
+
         private:
             // Starts RTC at 2025-09-25T00:00:00
             const uint8_t startYear = 25;

@@ -43,7 +43,7 @@
     // this interval should not also be increased.
     // See this spreadsheet for an easy airtime and duty cycle calculator:
     // https://docs.google.com/spreadsheets/d/1voGAtQAjC1qBmaVuP1ApNKs1ekgUjavHuVQIXyYSvNc
-    #define TX_INTERVAL 15000  //Delay between each message in milliseconds.
+    #define TX_INTERVAL 60000  //Delay between each message in milliseconds.
     
       // Pin mapping for SAMD21
       const lmic_pinmap lmic_pins = {
@@ -126,8 +126,11 @@
     
     // log text to USART and toggle LED
     static void tx_func (osjob_t* job) {
-      char buffer[16];
-      snprintf(buffer, sizeof(buffer), "%d", (int)averageTemp);
+      char buffer[20];
+      uint8_t hours = rtc.getHours();
+      uint8_t minutes = rtc.getMinutes();
+      uint8_t seconds = rtc.getSeconds();
+      snprintf(buffer, sizeof(buffer), "%d,%02d:%02d:%02d,%d", NODE_ID, hours, minutes, seconds, (int)averageTemp);
       tx(buffer, txdone_func);
       os_setTimedCallback(job, os_getTime() + ms2osticks(TX_INTERVAL + random(500)), tx_func);
       // reschedule job every TX_INTERVAL (plus a bit of random to prevent
