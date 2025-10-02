@@ -48,4 +48,16 @@ namespace RealTimeCounterLibrary {
            realTimeCounter.getMinutes(),
            realTimeCounter.getSeconds());
     }
+
+    uint8_t RealTimeCounter::getHours() {
+        return realTimeCounter.getHours();
+    }
+
+    uint8_t RealTimeCounter::getMinutes() {
+        return realTimeCounter.getMinutes();
+    }
+
+    uint8_t RealTimeCounter::getSeconds() {
+        return realTimeCounter.getSeconds();
+    }
 }
