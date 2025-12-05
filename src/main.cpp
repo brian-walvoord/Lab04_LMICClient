@@ -24,7 +24,7 @@
 RealTimeCounterLibrary::RealTimeCounter rtc;
 TemperatureLibrary::TemperatureReader tempSensor;
 float averageTemp = 0;
-const uint8_t NODE_ID = 3; // Unique ID for this node
+const uint8_t NODE_ID = 4; // Unique ID for this node
 
 // we formerly would check this configuration; but now there is a flag,
 // in the LMIC, LMIC.noRXIQinversion;
